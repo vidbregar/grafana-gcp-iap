@@ -1,0 +1,11 @@
+nameOverride: ""
+
+# Example only, consider External Secrets Operator, Kubernetes Secrets Store CSI Driver, ...
+oauth:
+  client_id: ""
+  secret: ""
+
+gatewayName: "gateway"
+hostname: "" # set at deploy
+securityPolicy: "" # recommended Cloud Armor security policy
+grafanaServiceName: "grafana"

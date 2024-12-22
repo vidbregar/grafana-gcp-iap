@@ -1,0 +1,62 @@
+# Config for your own needs:
+# https://artifacthub.io/packages/helm/grafana/grafana
+
+# we use gateway
+ingress:
+  enabled: false
+
+admin:
+  existingSecret: "grafana-admin"
+  userKey: admin-user
+  passwordKey: admin-password
+
+grafana.ini:
+  server:
+    protocol: http
+    http_addr: 0.0.0.0
+    http_port: 3000
+    root_url: https://grafana.example.com
+
+    # It's recommended to uncomment and configure
+    # for persistence
+    # database:
+    #  type: postgres
+    #  host: null # set in chart
+    #  name: null # set in chart
+    #  user: null # set in chart
+    #  # password: "" # obtained from GF_DATABASE_PASSWORD env
+
+  users:
+    allow_sign_up: false
+    allow_org_create: true
+    auto_assign_org: true
+    auto_assign_org_id: 1
+    auto_assign_org_role: Viewer
+    verify_email_enabled: false
+    default_theme: dark
+    viewers_can_edit: false
+    editors_can_admin: false
+
+  auth:
+    disable_login_form: true
+
+  # GCP IAP
+  auth.jwt:
+    enabled: true
+    auto_sign_up: true
+    header_name: "X-Goog-Iap-Jwt-Assertion"
+    username_claim: "email"
+    email_claim: "email"
+    jwk_set_url: "https://www.gstatic.com/iap/verify/public_key-jwk"
+    expect_claims: '{"iss": "https://cloud.google.com/iap"}'
+
+  auth.google:
+      enabled: false
+
+  log:
+    mode: console
+    level: info
+
+envFromSecrets:
+  - name: "grafana-env"
+    optional: false

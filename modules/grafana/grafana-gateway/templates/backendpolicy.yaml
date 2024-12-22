@@ -1,0 +1,16 @@
+apiVersion: networking.gke.io/v1
+kind: GCPBackendPolicy
+metadata:
+  name: "{{ include "grafana-gateway.name" . }}"
+spec:
+  default:
+    # securityPolicy: {{ .Values.securityPolicy }}
+    iap:
+      enabled: true
+      oauth2ClientSecret:
+        name: "{{ include "grafana-gateway.name" . }}"
+      clientID: {{ .Values.oauth.client_id }}
+  targetRef:
+    group: ""
+    kind: Service
+    name: "{{ .Values.grafanaServiceName }}"

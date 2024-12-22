@@ -1,0 +1,18 @@
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: "{{ include "grafana-gateway.name" . }}"
+spec:
+  default:
+    checkIntervalSec: 30
+    timeoutSec: 10
+    config:
+      type: HTTP
+      httpHealthCheck:
+        portSpecification: USE_FIXED_PORT
+        port: 3000
+        requestPath: /api/health
+  targetRef:
+    group: ""
+    kind: Service
+    name: "{{ .Values.grafanaServiceName }}"
