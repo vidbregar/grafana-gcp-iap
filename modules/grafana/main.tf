@@ -12,15 +12,15 @@ resource "helm_release" "grafana" {
   values = [file("${path.module}/files/values.yaml")]
 
   set {
-    name  = "database.host"
+    name  = "grafana\\.ini.database.host"
     value = "<host>:5432"
   }
   set {
-    name  = "database.name"
+    name  = "grafana\\.ini.database.name"
     value = local.database.name
   }
   set {
-    name  = "database.user"
+    name  = "grafana\\.ini.database.user"
     value = local.database.user
   }
 
